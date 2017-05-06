@@ -51,17 +51,17 @@ let api = kittn.authorize('meowmeowmeow');
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Chui.ai uses API keys to allow access to the API. You can register a new API key at our [developer portal](http://chui.ai/).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Chui.ai expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+`x-api-key: chuiai-api-key`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>chuiai-api-key</code> with your personal API key.
 </aside>
 
-# Kittens
+# Spoof Detection
 
 ## Get All Kittens
 
@@ -131,13 +131,6 @@ Remember — a happy kitten is an authenticated kitten!
 
 ## Get a Specific Kitten
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
 ```python
 import kittn
 
@@ -175,11 +168,24 @@ This endpoint retrieves a specific kitten.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://api.chui.api/process`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to retrieve
+
+
+# Face Detection
+
+Coming Soon
+
+# Face Recognition
+Coming Soon
+
+
+# Chui Hardware
+
+
 
