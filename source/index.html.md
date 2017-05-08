@@ -4,7 +4,6 @@ title: API Reference
 language_tabs:
   - shell
   - python
-  - javascript
 
 toc_footers:
   - <a href='http://chui.ai'>chui.ai</a>
@@ -25,29 +24,22 @@ Welcome to the chui.ai API documentation! You can use our API to access detect, 
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
+headers = {
+  "x-api-key":"chuiai-api-key"
+}
+
+r = requests.post(url,headers=headers)
 ```
 
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "x-api-key: chuiai-api-key"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
@@ -63,33 +55,30 @@ You must replace <code>chuiai-api-key</code> with your personal API key.
 
 # Spoof Detection
 
-## Get All Kittens
+## Check if an image is a spoof attempt
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
 
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+headers = {
+  "x-api-key":"chui-api-key",
+  "Content-Type":"image/jpeg",
+  
+}
+
+url = "https://api.chui.ai/v1/spdetect"
+
+r  = requests.post(url,data=open('/Users/nezare/Pictures/test_images/fake_1.jpg','rb').read(),headers=headers)
+
+print r.json()
 ```
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.chui.ai/v1/spdetect"
+  -H "x-api-key: chui-api-key"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
 
 > The above command returns JSON structured like this:
 
@@ -116,7 +105,7 @@ This endpoint retrieves all kittens.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`POST https://api.chui.ai/v1/spdetect`
 
 ### Query Parameters
 
