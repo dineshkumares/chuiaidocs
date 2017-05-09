@@ -75,95 +75,54 @@ print r.json()
 ```
 
 ```shell
-curl "https://api.chui.ai/v1/spdetect"
-  -H "x-api-key: chui-api-key"
+curl -X POST -H "x-api-key: chui-api-key" -H "Content-Type: image/jpeg" --data-binary "@fake_1.jpg" "https://api.chui.ai/v1/spdetect"
+
 ```
 
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`POST https://api.chui.ai/v1/spdetect`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "data": {
+    "class": "fake",
+    "key": "ahBzfmNodWlzcGRldGVjdG9ychULEghTbmFwc2hvdBiAgICAgtCJCgw",
+    "score": 0.57887299999999997,
+    "success": true
+  },
+  "message": "data processed successfully",
+  "success": true
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint checks if an image is a spoof attempt.
 
 ### HTTP Request
 
-`POST http://api.chui.api/process`
+`POST https://api.chui.ai/v1/spdetect`
 
-### URL Parameters
+### Binary Payload
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Include the binary file in the body of your request.
+
+
+<aside class="warning">
+Remember — always include a Content-Type header in your request
+</aside>
+
+
+### JSON Payload
+
+The API accepts JSON payloads as well, include "img" in the json payload as a base64 encoded string.
+
+Parameter | Required | Description
+--------- | ------- | -----------
+img | true | base64 encoded string
+
+<aside class="warning">
+Remember — always include a Content-Type header in your request
+</aside>
+
 
 
 # Face Detection
