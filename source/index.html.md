@@ -105,6 +105,7 @@ This endpoint checks if an image is a spoof attempt.
 
 Include the binary file in the body of your request.
 
+Make sure to include an image/jpeg or image/png Content-Type header when posting a binary payload.
 
 <aside class="warning">
 Remember — always include a Content-Type header in your request
@@ -114,6 +115,8 @@ Remember — always include a Content-Type header in your request
 ### JSON Payload
 
 The API accepts JSON payloads as well, include "img" in the json payload as a base64 encoded string.
+
+Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
 --------- | ------- | -----------
@@ -127,13 +130,104 @@ Remember — always include a Content-Type header in your request
 
 # Face Detection
 
-Coming Soon
+## Detect faces in an image
+
+
+```python
+import requests
+
+headers = {
+  "x-api-key":"chui-api-key",
+  "Content-Type":"image/jpeg",
+  
+}
+
+url = "https://api.chui.ai/v1/facedetect"
+
+r  = requests.post(url,data=open('/Users/nezare/Pictures/test_images/reat_1.jpg','rb').read(),headers=headers)
+
+print r.json()
+```
+
+```shell
+curl -X POST -H "x-api-key: chui-api-key" -H "Content-Type: image/jpeg" --data-binary "@real_1.jpg" "https://api.chui.ai/v1/facedetect"
+
+```
+
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "faces": [
+      {
+        "bounding_box": [
+          272.7483750283718,
+          29.899811007082462,
+          335.0228900015354,
+          117.26292028464377,
+          0.9998049139976501
+        ],
+        "points": [
+          291,
+          319,
+          306,
+          296,
+          316,
+          65,
+          62,
+          79,
+          97,
+          95
+        ]
+      }
+    ]
+  },
+  "message": "face processed successfully",
+  "success": true
+}
+```
+
+Detect faces in an image
+
+### HTTP Request
+
+`POST https://api.chui.ai/v1/facedetect`
+
+### Binary Payload
+
+Include the binary file in the body of your request.
+
+Make sure to include an image/jpeg or image/png Content-Type header when posting a binary payload.
+
+<aside class="warning">
+Remember — always include a Content-Type header in your request
+</aside>
+
+
+### JSON Payload
+
+The API accepts JSON payloads as well, include "img" in the json payload as a base64 encoded string.
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | -----------
+img | true | base64 encoded string
+
+
+### Response
+
+The response includes the pixel locations of the bounding boxes for all faces detected in an image, as well as five facial landmarks that include left eye, right eye, nose, left mouth corner, and right mouth corner.
+
 
 # Face Recognition
-Coming Soon
+Docs Coming Soon
 
 
 # Chui Hardware
+Docs Coming Soon
 
 
 
