@@ -200,7 +200,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -210,8 +210,8 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="shell">shell</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -250,9 +250,9 @@ curl <span class="s2">"api_endpoint_here"</span>
 <p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
 </blockquote>
 
-<p>Chui.ai uses API keys to allow access to the API. You can register a new API key at our <a href="http://chui.ai/">developer portal</a>.</p>
+<p>Chui.ai uses API keys to allow access. You can register a new API key at our <a href="http://chui.ai/">developer portal</a>.</p>
 
-<p>Chui.ai expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>Chui.ai expects the API key to be included in all requests to the server in a header that looks like the following:</p>
 
 <p><code class="prettyprint">x-api-key: chuiai-api-key</code></p>
 
@@ -423,11 +423,189 @@ Remember — always include a Content-Type header in your request
 
 <h3 id="response">Response</h3>
 
-<p>The response includes the pixel locations of the bounding boxes for all faces detected in an image, as well as five facial landmarks that include left eye, right eye, nose, left mouth corner, and right mouth corner.</p>
+<p>The response includes the pixel locations of the bounding boxes for all faces detected in an image, the last value in the bounding box array is the confidence cofficient. The face detect endpoint also returns five main facial landmarks that include left eye, right eye, nose, left mouth corner, and right mouth corner.</p>
 
 <h1 id="face-recognition">Face Recognition</h1>
 
-<p>Docs Coming Soon</p>
+<h2 id="enroll">Enroll</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"your_api_key"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
+
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/enroll"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"img1"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"img2"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"name"</span><span class="p">:</span><span class="s">"John Doe"</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enrollment processed successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"enrollment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgID5r4YKDA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.chui.ai/v1/enroll</code></p>
+
+<p>This endpoint only accepts a json payload.</p>
+
+<p>To enforce good training, you need a minimum of 3 pictures to enroll someone.</p>
+
+<p>include the enrollment pictures as base64 strings as -&gt; img0,img1,img2&hellip;.img(N) &ndash;&gt; (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)</p>
+
+<h3 id="collection-id">Collection ID</h3>
+
+<p>you can add a profile to a collection by simply including the collection id as &ldquo;collection_id&rdquo; in the json payload</p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>img(0-n)</td>
+<td>true</td>
+<td>base64 encoded string</td>
+</tr>
+<tr>
+<td>name</td>
+<td>false</td>
+<td>string</td>
+</tr>
+<tr>
+<td>collection_id</td>
+<td>false</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<p>The response includes the profile id which you can use in subsequent matching operations.</p>
+
+<h2 id="collections">Collections</h2>
+
+<p>You can group profiles in collections, 1:N identification classifiers rely on collections (you need to create a collection to preform an identify operation using the idenfity endpoint below).</p>
+
+<p>DOCS FOR THIS ENDPOINT ARE COMING SOON!</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p>coming soon</p>
+
+<h2 id="face-match">Face Match</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"your_api_key"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
+
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/match"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"img"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgID5r4YKDA"</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"face processed successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"emb2_match"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"emb0_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9071727430549092</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"emb2_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8963609236288711</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"emb1_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8896829534022603</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"emb1_match"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"emb0_match"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint only accepts a json payload.</p>
+
+<p>The face match endpoint is used to match a face to a profile on the system. Send a picture of the face along with id of the person you&rsquo;d like to match.</p>
+
+<p>The endpoint will attempt the generated embedding against every embedding stored for the profile. Return the score and result for every embedding for that profile.</p>
+
+<p>You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.chui.ai/v1/match</code></p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>img</td>
+<td>true</td>
+<td>base64 encoded string</td>
+</tr>
+<tr>
+<td>id</td>
+<td>true</td>
+<td>string</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td>false</td>
+<td>float</td>
+</tr>
+</tbody></table>
+
+<h2 id="update-profile">Update Profile</h2>
+
+<p>The endpoint will match the supplied</p>
+
+<h2 id="face-identify">Face Identify</h2>
+
+<p>Coming soon</p>
 
 <h1 id="chui-hardware">Chui Hardware</h1>
 
@@ -494,8 +672,8 @@ Remember — always include a Content-Type header in your request
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="shell">shell</a>
           </div>
       </div>
     </div>
