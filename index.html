@@ -511,14 +511,134 @@ Remember — always include a Content-Type header in your request
 <p>The response includes the profile id which you can use in subsequent matching operations.</p>
 
 <h2 id="collections">Collections</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
-<p>You can group profiles in collections, 1:N identification classifiers rely on collections (you need to create a collection to preform an identify operation using the idenfity endpoint below).</p>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
+<span class="p">}</span>
 
-<p>DOCS FOR THIS ENDPOINT ARE COMING SOON!</p>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/collection"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"name"</span><span class="p">:</span><span class="s">"Home"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICfwYELDA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collection created successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint only accepts a json payload.</p>
+
+<p>To preform indentification you need to group profiles in collections. To create a collection simply post name of the collection and save the returned id for later use.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p>coming soon</p>
+<p><code class="prettyprint">POST https://api.chui.ai/v1/collection</code></p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>true</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<p>The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.</p>
+
+<h2 id="update-a-collection">Update a Collection</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"content-type"</span><span class="p">:</span><span class="s">"application/json"</span>
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/collection"</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgIDE25QJDA"</span><span class="p">,</span>
+  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collection updated successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>To update a collection with an enrollment, make a put request to the collection endpoint with the collection id and the profile you&rsquo;d like to add.</p>
+
+<p>A classifier is created for each collection and is retrained everytime the collection is updated. Please allow for up to 30 seconds after updating your collection for the collection classifier to reflect the changes.</p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>enrollment_id</td>
+<td>true</td>
+<td>string</td>
+</tr>
+<tr>
+<td>collection_id</td>
+<td>true</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.chui.ai/v1/collection</code></p>
+
+<h3 id="response">Response</h3>
+
+<p>The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.</p>
 
 <h2 id="face-match">Face Match</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -559,17 +679,19 @@ Remember — always include a Content-Type header in your request
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint only accepts a json payload.</p>
-
-<p>The face match endpoint is used to match a face to a profile on the system. Send a picture of the face along with id of the person you&rsquo;d like to match.</p>
-
-<p>The endpoint will attempt the generated embedding against every embedding stored for the profile. Return the score and result for every embedding for that profile.</p>
-
-<p>You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.</p>
+<p><code class="prettyprint">POST https://api.chui.ai/v1/match</code></p>
 
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://api.chui.ai/v1/match</code></p>
+
+<p>This endpoint only accepts a json payload.</p>
+
+<p>The face match endpoint is used to match a face to a profile on the system. Send a picture of the face along with id of the person you&rsquo;d like to match.</p>
+
+<p>The endpoint will attempt to match the generated embedding against every embedding stored for the profile. Return the score and result for every embedding for that profile.</p>
+
+<p>You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.</p>
 
 <h3 id="json-payload">JSON Payload</h3>
 
@@ -599,17 +721,77 @@ Remember — always include a Content-Type header in your request
 </tr>
 </tbody></table>
 
+<h2 id="face-identify">Face Identify</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/identify"</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"img"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"chui-collection-id"</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"identify processed successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name-if-exists"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id-of-identified-person"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.chui.ai/v1/identify</code></p>
+
+<p>This endpoint only accepts a json payload.</p>
+
+<p>Identify preforms 1:N classification while also measuring the probablity of an unknown.</p>
+
+<p>To use this endpoint send the image as a base64 encoded string along with the collection id you&rsquo;d like to compare the image to.</p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>img</td>
+<td>true</td>
+<td>base64 encoded string</td>
+</tr>
+<tr>
+<td>collection_id</td>
+<td>true</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
 <h2 id="update-profile">Update Profile</h2>
 
 <p>The endpoint will match the supplied</p>
-
-<h2 id="face-identify">Face Identify</h2>
-
-<p>Coming soon</p>
-
-<h1 id="chui-hardware">Chui Hardware</h1>
-
-<p>Docs Coming Soon</p>
 
           <h1 id="errors">Errors</h1>
 
