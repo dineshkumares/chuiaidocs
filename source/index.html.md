@@ -298,7 +298,7 @@ collection_id | false | string
 The response includes the profile id which you can use in subsequent matching operations.
 
 
-## Collections
+## Create a collection
 
 ```python
 import requests
