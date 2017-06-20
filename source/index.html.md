@@ -299,14 +299,127 @@ The response includes the profile id which you can use in subsequent matching op
 
 
 ## Collections
-You can group profiles in collections, 1:N identification classifiers rely on collections (you need to create a collection to preform an identify operation using the idenfity endpoint below).
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "x-api-key":"chui-api-key",
+  "Content-Type":"application/json",  
+}
+
+url = "https://api.chui.ai/v1/collection"
+
+data = {
+  "name":"Home",
+}
+
+r  = requests.post(url,data=json.dumps(data),headers=headers)
+
+print r.content
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
 
 
-DOCS FOR THIS ENDPOINT ARE COMING SOON!
+> The above request returns JSON structured like this:
+
+```json
+{
+	"data": {
+		"collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICfwYELDA"
+	},
+	"message": "collection created successfully",
+	"success": true
+}
+```
+This endpoint only accepts a json payload.
+
+
+To preform indentification you need to group profiles in collections. To create a collection simply post name of the collection and save the returned id for later use.
+
 
 ### HTTP Request
-coming soon
+`POST https://api.chui.ai/v1/collection`
 
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | ----------- 
+name | true | string
+
+
+### Response
+The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.
+
+## Update a Collection
+
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "content-type":"application/json"
+}
+
+url = "https://api.chui.ai/v1/collection"
+
+
+data = {
+  "enrollment_id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgIDE25QJDA",
+  "collection_id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"
+}
+
+r  = requests.put(url,data=json.dumps(data),headers=headers)
+
+print r.json()
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
+
+
+> The above request returns JSON structured like this:
+
+```json
+{
+	"message": "collection updated successfully",
+	"data": {
+		"collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"
+	},
+	"success": true
+}
+```
+
+To update a collection with an enrollment, make a put request to the collection endpoint with the collection id and the profile you'd like to add.
+
+A classifier is created for each collection and is retrained everytime the collection is updated. Please allow for up to 30 seconds after updating your collection for the collection classifier to reflect the changes.
+
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | ----------- 
+enrollment_id | true | string
+collection_id | true | string
+
+
+### HTTP Request
+`POST https://api.chui.ai/v1/collection`
+
+
+### Response
+The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.
 
 ## Face Match
 
@@ -355,18 +468,22 @@ No Curl Example for this endpoint, check python.
 }
 ```
 
-This endpoint only accepts a json payload.
-
-The face match endpoint is used to match a face to a profile on the system. Send a picture of the face along with id of the person you'd like to match.
-
-The endpoint will attempt the generated embedding against every embedding stored for the profile. Return the score and result for every embedding for that profile.
-
-You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.
+`POST https://api.chui.ai/v1/match`
 
 
 ### HTTP Request
 
 `POST https://api.chui.ai/v1/match`
+
+
+This endpoint only accepts a json payload.
+
+The face match endpoint is used to match a face to a profile on the system. Send a picture of the face along with id of the person you'd like to match.
+
+The endpoint will attempt to match the generated embedding against every embedding stored for the profile. Return the score and result for every embedding for that profile.
+
+You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.
+
 
 
 ### JSON Payload
@@ -379,17 +496,74 @@ img | true | base64 encoded string
 id | true | string
 threshold | false | float
 
-## Update Profile
-The endpoint will match the supplied
-
-
 
 ## Face Identify
-Coming soon
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "x-api-key":"chui-api-key",
+  "Content-Type":"application/json",  
+}
+
+url = "https://api.chui.ai/v1/identify"
 
 
-# Chui Hardware
-Docs Coming Soon
+data = {
+  "img":base64.b64encode(open('2.jpg','rb').read()),
+  "collection_id":"chui-collection-id"
+}
+
+r  = requests.post(url,data=json.dumps(data),headers=headers)
+
+print r.json()
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
+
+
+> The above request returns JSON structured like this:
+
+```json
+{
+	"message": "identify processed successfully",
+	"data": {
+		"name": "name-if-exists",
+		"key": "id-of-identified-person"
+	},
+	"success": true
+}
+```
+
+### HTTP Request
+
+`POST https://api.chui.ai/v1/identify`
+
+This endpoint only accepts a json payload.
+
+Identify preforms 1:N classification while also measuring the probablity of an unknown.
+
+To use this endpoint send the image as a base64 encoded string along with the collection id you'd like to compare the image to.
+
+
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | ----------- 
+img | true | base64 encoded string
+collection_id | true | string
+
+
+
+## Update Profile
+The endpoint will match the supplied
 
 
 
