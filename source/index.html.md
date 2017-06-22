@@ -20,7 +20,7 @@ Welcome to the chui.ai API documentation! You can use our API to access detect, 
 
 
 <aside class="warning">
-Remember — don't send pictures larger than 500kb, resize and compress images before sending them.
+Remember — this api doesn't accept images larger than 1mb, resize and/or compress images before sending them.
 </aside>
 
 # Authentication
