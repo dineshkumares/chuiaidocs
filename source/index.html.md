@@ -19,6 +19,9 @@ search: true
 Welcome to the chui.ai API documentation! You can use our API to access detect, identify and validate faces.
 
 
+<aside class="warning">
+Remember — don't send pictures larger than 500kb, resize and compress images before sending them.
+</aside>
 
 # Authentication
 
@@ -41,7 +44,7 @@ curl "api_endpoint_here"
 ```
 
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `chuiai-api-key` with your API key.
 
 Chui.ai uses API keys to allow access. You can register a new API key at our [developer portal](http://chui.ai/).
 
