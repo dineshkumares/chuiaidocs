@@ -277,7 +277,7 @@ No Curl Example for this endpoint, check python.
 
 This endpoint only accepts a json payload.
 
-To enforce good training, you need a minimum of 3 pictures to enroll someone.
+To enforce good training, we recommend a minimum of 3 pictures to enroll someone.
 
 include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N) --> (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)
 
@@ -298,7 +298,75 @@ collection_id | false | string
 
 
 ### Response
-The response includes the profile id which you can use in subsequent matching operations.
+The response includes the profile id which you can use in subsequent matching operations and to update the profile with more training pictures.
+
+
+
+## Update Profile
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "x-api-key":"nvNrg0HwEb6vB6ki3wQEm90kAAE4o9lD978bNoYy",
+  "Content-Type":"application/json",  
+}
+
+url = "https://api.chui.ai/v1/enroll"
+
+
+data = {
+  "enrollment_id":"ahJkZXZ-Y2h1aXNwZGV0ZWN0b3JyFwsSCkVucm9sbG1lbnQYgICAgIDglwoM",
+  "img0":base64.b64encode(open('3.jpg','rb').read()),
+  
+}
+
+r  = requests.put(url,data=json.dumps(data),headers=headers)
+
+print r.json()
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
+
+
+> The above request returns JSON structured like this:
+
+```json
+{
+	"message": "enrollment updated successfully",
+	"data": {
+		"enrollment_id": "ahJkZXZ-Y2h1aXNwZGV0ZWN0b3JyFwsSCkVucm9sbG1lbnQYgICAgIDglwoM"
+	},
+	"success": true
+}
+```
+
+
+this endpoint allows you to update a profile with more training pictures to improve accuracy.
+
+### HTTP Request
+
+`POST https://api.chui.ai/v1/enroll`
+
+This endpoint only accepts a json payload.
+
+
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | ----------- 
+img(0-n) | true | base64 encoded string
+enrollment_id | true | string
+
+
+
+
 
 
 ## Create a collection
@@ -565,8 +633,9 @@ collection_id | true | string
 
 
 
-## Update Profile
-The endpoint will match the supplied
+
+
+
 
 
 
