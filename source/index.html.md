@@ -310,7 +310,7 @@ import base64
 import json
 
 headers = {
-  "x-api-key":"nvNrg0HwEb6vB6ki3wQEm90kAAE4o9lD978bNoYy",
+  "x-api-key":"your_api_key",
   "Content-Type":"application/json",  
 }
 
