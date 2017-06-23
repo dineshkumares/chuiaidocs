@@ -279,6 +279,10 @@ To enforce good training, we recommend a minimum of 3 pictures to enroll someone
 include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N) --> (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)
 
 
+<aside class="warning">
+Remember — this endpoint processes one face at time.
+</aside>
+
 ### Collection ID
 you can add a profile to a collection by simply including the collection id as "collection_id" in the json payload
 
@@ -552,6 +556,10 @@ The endpoint will attempt to match the generated embedding against every embeddi
 
 You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.
 
+
+<aside class="warning">
+Remember — this endpoint processes one face at time.
+</aside>
 
 
 ### JSON Payload
