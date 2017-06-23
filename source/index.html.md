@@ -125,9 +125,6 @@ Parameter | Required | Description
 --------- | ------- | -----------
 img | true | base64 encoded string
 
-<aside class="warning">
-Remember — always include a Content-Type header in your request
-</aside>
 
 
 
