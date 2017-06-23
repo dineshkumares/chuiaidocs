@@ -280,7 +280,7 @@ include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N)
 
 
 <aside class="warning">
-Remember — this endpoint processes one face at time.
+Remember — this endpoint processes one face at a time.
 </aside>
 
 ### Collection ID
@@ -558,7 +558,7 @@ You can supply the threshold to be used. If no threshold is supplied, the api wi
 
 
 <aside class="warning">
-Remember — this endpoint processes one face at time.
+Remember — this endpoint processes one face at a time.
 </aside>
 
 
