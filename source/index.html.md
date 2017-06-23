@@ -16,7 +16,7 @@ search: true
 
 # Introduction
 
-Welcome to the chui.ai API documentation! You can use our API to access detect, identify and validate faces.
+Welcome to the chui.ai API documentation! You can use our API to detect, match, identify and validate faces.
 
 
 <aside class="warning">
