@@ -474,6 +474,10 @@ Remember — always include a Content-Type header in your request
 
 <p>include the enrollment pictures as base64 strings as -&gt; img0,img1,img2&hellip;.img(N) &ndash;&gt; (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)</p>
 
+<aside class="warning">
+Remember — this endpoint processes one face at time.
+</aside>
+
 <h3 id="collection-id">Collection ID</h3>
 
 <p>you can add a profile to a collection by simply including the collection id as &ldquo;collection_id&rdquo; in the json payload</p>
@@ -758,6 +762,10 @@ Remember — always include a Content-Type header in your request
 <p>The endpoint will attempt to match the generated embedding against every embedding stored for the profile. Return the score and result for every embedding for that profile.</p>
 
 <p>You can supply the threshold to be used. If no threshold is supplied, the api will default to a threshold of 0.5.</p>
+
+<aside class="warning">
+Remember — this endpoint processes one face at time.
+</aside>
 
 <h3 id="json-payload">JSON Payload</h3>
 
