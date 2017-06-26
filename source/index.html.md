@@ -224,7 +224,7 @@ The response includes the pixel locations of the bounding boxes for all faces de
 
 ## Raw Face Landmarks
 
-The face endpoint supports returning 68 face landmarks. To get the raw landmarks, include a "rawlandmark=true" url param to the face detect url.
+The face detection endpoint supports returning 68 face landmarks. To get the raw landmarks, include a "rawlandmark=true" url param to the face detect url.
 
 ### Example
 
