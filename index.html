@@ -425,6 +425,14 @@ Remember — always include a Content-Type header in your request
 
 <p>The response includes the pixel locations of the bounding boxes for all faces detected in an image, the last value in the bounding box array is the confidence cofficient. The face detect endpoint also returns five main facial landmarks that include left eye, right eye, nose, left mouth corner, and right mouth corner.</p>
 
+<h2 id="raw-face-landmarks">Raw Face Landmarks</h2>
+
+<p>The face endpoint supports returning 68 face landmarks. To get the raw landmarks, include a &ldquo;rawlandmark=true&rdquo; url param to the face detect url.</p>
+
+<h3 id="example">Example</h3>
+
+<p><code class="prettyprint">POST https://api.chui.ai/v1/facedetect?rawlandmark=true</code></p>
+
 <h1 id="face-recognition">Face Recognition</h1>
 
 <h2 id="enroll">Enroll</h2>
