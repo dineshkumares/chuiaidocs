@@ -434,7 +434,11 @@ Make sure to include an application/json Content-Type header when posting a json
 Parameter | Required | Description
 --------- | ------- | ----------- 
 name | true | string
+unknowns | optional | boolean
 
+
+### Unknown Class
+If unknowns is set to true, a class with dynamic dynamic sample size added to each classifier to help it filter out unknowns and reduce false positives. Can be in conjunction with the confidence rate.
 
 ### Response
 The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.
@@ -496,7 +500,7 @@ collection_id | true | string
 
 
 ### HTTP Request
-`POST https://api.chui.ai/v1/collection`
+`PUT https://api.chui.ai/v1/collection`
 
 
 ### Response
