@@ -644,7 +644,16 @@ Remember — this endpoint processes one face at a time.
 <td>true</td>
 <td>string</td>
 </tr>
+<tr>
+<td>unknowns</td>
+<td>optional</td>
+<td>boolean</td>
+</tr>
 </tbody></table>
+
+<h3 id="unknown-class">Unknown Class</h3>
+
+<p>If unknowns is set to true, a class with dynamic dynamic sample size added to each classifier to help it filter out unknowns and reduce false positives. Can be in conjunction with the confidence rate.</p>
 
 <h3 id="response">Response</h3>
 
@@ -712,7 +721,7 @@ Remember — this endpoint processes one face at a time.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/collection</code></p>
+<p><code class="prettyprint">PUT https://api.chui.ai/v1/collection</code></p>
 
 <h3 id="response">Response</h3>
 
