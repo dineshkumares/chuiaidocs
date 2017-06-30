@@ -20,7 +20,7 @@ Welcome to the chui.ai API documentation! You can use our API to detect, match, 
 
 
 <aside class="warning">
-Remember — this api doesn't accept images larger than 1mb, resize and/or compress images before sending them.
+Remember — this api doesn't accept images larger than 2mbs, resize and/or compress images before sending them.
 </aside>
 
 # Authentication
