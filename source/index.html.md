@@ -452,7 +452,9 @@ import base64
 import json
 
 headers = {
-  "content-type":"application/json"
+  "content-type":"application/json",
+  "x-api-key":"chui-api-key"
+  
 }
 
 url = "https://api.chui.ai/v1/collection"
@@ -509,6 +511,46 @@ The response includeds the collection id, make sure you save this id to preform 
 
 ## Train a Collection classifier
 
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "content-type":"application/json",
+  "x-api-key":"chui-api-key"
+}
+
+url = "https://api.chui.ai/v1/train"
+
+
+data = {
+  "collection_id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"
+}
+
+r  = requests.post(url,data=json.dumps(data),headers=headers)
+
+print r.json()
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
+
+
+> The above request returns JSON structured like this:
+
+```json
+{
+    "data": {
+        "collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMDMgY4LDA"
+    },
+    "message": "retraining the classifier",
+    "success": true
+}
+```
+
+
 After updating a collection you need to trigger a training of the classifier before its ready for use in identify requests.
 
 
@@ -527,14 +569,9 @@ Parameter | Required | Description
 --------- | ------- | ----------- 
 collection_id_ | true | string
 
+### Response
 
-{
-    "data": {
-        "collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMDMgY4LDA"
-    },
-    "message": "retraining the classifier",
-    "success": true
-}
+
 
 
 ## Face Match
