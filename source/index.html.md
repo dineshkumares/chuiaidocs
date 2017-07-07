@@ -248,9 +248,11 @@ headers = {
 url = "https://api.chui.ai/v1/enroll"
 
 data = {
-  "img0":base64.b64encode(open('2.jpg','rb').read()),
-  "img1":base64.b64encode(open('2.jpg','rb').read()),
+  "img0":base64.b64encode(open('0.jpg','rb').read()),
+  "img1":base64.b64encode(open('1.jpg','rb').read()),
   "img2":base64.b64encode(open('2.jpg','rb').read()),
+  "img3":base64.b64encode(open('3.jpg','rb').read()),
+  "img4":base64.b64encode(open('4.jpg','rb').read()),
   "name":"John Doe"
 }
 
@@ -277,6 +279,10 @@ No Curl Example for this endpoint, check python.
 
 ```
 
+<aside class="warning">
+Remember — our apis utilize deep learning a technique that requires a lot of data, we recommend enroll a profile with at least 5 photos.
+</aside>
+
 ### HTTP Request
 
 `POST https://api.chui.ai/v1/enroll`
@@ -291,6 +297,7 @@ include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N)
 <aside class="warning">
 Remember — this endpoint processes one face at a time.
 </aside>
+
 
 ### Collection ID
 you can add a profile to a collection by simply including the collection id as "collection_id" in the json payload
@@ -570,6 +577,7 @@ Parameter | Required | Description
 collection_id_ | true | string
 
 ### Response
+A success message will indicate the classifier is in training for the collection.
 
 
 
