@@ -431,7 +431,7 @@ Remember — always include a Content-Type header in your request
 
 <h3 id="example">Example</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/facedetect?rawlandmark=true</code></p>
+<p><code class="prettyprint">POST https://api.chui.ai/v1/facedetect?rawlandmarks=true</code></p>
 
 <h1 id="face-recognition">Face Recognition</h1>
 
@@ -726,6 +726,44 @@ Remember — this endpoint processes one face at a time.
 <h3 id="response">Response</h3>
 
 <p>The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.</p>
+
+<h2 id="train-a-collection-classifier">Train a Collection classifier</h2>
+
+<p>After updating a collection you need to trigger a training of the classifier before its ready for use in identify requests.</p>
+
+<aside class="warning">
+Remember — you need to trigger a training of the classifier before its ready for use in identify requests.
+</aside>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.chui.ai/v1/train</code></p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>collection_id_</td>
+<td>true</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p>{
+    &ldquo;data&rdquo;: {
+        &ldquo;collection_id&rdquo;: &ldquo;ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMDMgY4LDA&rdquo;
+    },
+    &ldquo;message&rdquo;: &ldquo;retraining the classifier&rdquo;,
+    &ldquo;success&rdquo;: true
+}</p>
 
 <h2 id="face-match">Face Match</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
