@@ -280,7 +280,7 @@ No Curl Example for this endpoint, check python.
 ```
 
 <aside class="warning">
-Remember — our apis utilize deep learning a technique that requires a lot of data, we recommend enroll a profile with at least 5 photos.
+Remember — our apis utilize deep learning a technique that requires a lot of data, we recommend enrolling a profile with at least 5 photos.
 </aside>
 
 ### HTTP Request
@@ -295,7 +295,7 @@ include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N)
 
 
 <aside class="warning">
-Remember — this endpoint processes one face at a time.
+Remember — don't include different faces when enrolling someone
 </aside>
 
 
