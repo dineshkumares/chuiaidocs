@@ -449,9 +449,11 @@ Remember — always include a Content-Type header in your request
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/enroll"</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
-  <span class="s">"img1"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'0.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"img1"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'1.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
   <span class="s">"img2"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"img3"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'3.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
+  <span class="s">"img4"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'4.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
   <span class="s">"name"</span><span class="p">:</span><span class="s">"John Doe"</span>
 <span class="p">}</span>
 
@@ -472,6 +474,10 @@ Remember — always include a Content-Type header in your request
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
+<aside class="warning">
+Remember — our apis utilize deep learning a technique that requires a lot of data, we recommend enroll a profile with at least 5 photos.
+</aside>
+
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://api.chui.ai/v1/enroll</code></p>
@@ -791,6 +797,8 @@ Remember — you need to trigger a training of the classifier before its ready f
 </tbody></table>
 
 <h3 id="response">Response</h3>
+
+<p>A success message will indicate the classifier is in training for the collection.</p>
 
 <h2 id="face-match">Face Match</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
