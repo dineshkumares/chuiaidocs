@@ -228,7 +228,7 @@ The face detection endpoint supports returning 68 face landmarks. To get the raw
 
 ### Example
 
-`POST https://api.chui.ai/v1/facedetect?rawlandmark=true`
+`POST https://api.chui.ai/v1/facedetect?rawlandmarks=true`
 
 
 # Face Recognition
@@ -505,6 +505,37 @@ collection_id | true | string
 
 ### Response
 The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.
+
+
+## Train a Collection classifier
+
+After updating a collection you need to trigger a training of the classifier before its ready for use in identify requests.
+
+
+<aside class="warning">
+Remember — you need to trigger a training of the classifier before its ready for use in identify requests.
+</aside>
+
+### HTTP Request
+`POST https://api.chui.ai/v1/train`
+
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | ----------- 
+collection_id_ | true | string
+
+
+{
+    "data": {
+        "collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMDMgY4LDA"
+    },
+    "message": "retraining the classifier",
+    "success": true
+}
+
 
 ## Face Match
 
