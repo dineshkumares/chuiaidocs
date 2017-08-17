@@ -367,7 +367,7 @@ this endpoint allows you to update a profile with more training pictures to impr
 
 ### HTTP Request
 
-`POST https://api.chui.ai/v1/enroll`
+`PUT https://api.chui.ai/v1/enroll`
 
 This endpoint only accepts a json payload.
 
