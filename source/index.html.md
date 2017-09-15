@@ -6,7 +6,7 @@ language_tabs:
   - shell
 
 toc_footers:
-  - <a href='http://chui.ai'>chui.ai</a>
+  - <a href='http://trueface.ai'>Trueface.ai</a>
 
 includes:
   - errors
@@ -23,6 +23,7 @@ Welcome to the chui.ai API documentation! You can use our API to detect, match, 
 Remember — this api doesn't accept images larger than 2mbs, resize and/or compress images before sending them.
 </aside>
 
+
 # Authentication
 
 > To authorize, use this code:
@@ -31,7 +32,7 @@ Remember — this api doesn't accept images larger than 2mbs, resize and/or comp
 import requests
 
 headers = {
-  "x-api-key":"chuiai-api-key"
+  "x-api-key":"your_api_key"
 }
 
 r = requests.post(url,headers=headers)
@@ -40,21 +41,48 @@ r = requests.post(url,headers=headers)
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "x-api-key: chuiai-api-key"
+  -H "x-api-key: Truefaceai-api-key"
 ```
 
 
-> Make sure to replace `chuiai-api-key` with your API key.
+> Make sure to replace `Truefaceai-api-key` with your API key.
 
-Chui.ai uses API keys to allow access. You can register a new API key at our [developer portal](http://chui.ai/).
+Trueface.ai uses API keys to allow access. You can register a new API key at our [developer portal](https://trueface.ai/).
 
-Chui.ai expects the API key to be included in all requests to the server in a header that looks like the following:
+Trueface.ai expects the API key to be included in all requests to the server in a header that looks like the following:
 
-`x-api-key: chuiai-api-key`
+`x-api-key: your_api_key`
 
 <aside class="notice">
-You must replace <code>chuiai-api-key</code> with your personal API key.
+You must replace <code>truefaceai-api-key</code> with your personal API key.
 </aside>
+
+
+
+# Concepts
+
+##Preforming 1:1 Matching
+To perform a 1:1 matching operation (check if any faces in an image match an enrolled profile), you need to:
+
+1. Create s profile with POST /enroll
+
+2. Call POST /match with the id of the enrollment along with the  image you’d like to check in base64 encoded format
+
+The default threshold is 0.4 (scores over 99.2% on the LFW). To increase the matching threshold simply pass a "threshold" param.
+
+##Preforming 1:n Identification
+
+To preform 1:n identification (identify faces in an image), you need to:
+
+1. Create a collection with POST /collection
+
+2. Create profiles with /enroll passing the collection id from above, if the profiles are already enrolled then you can use PUT /collection to update the collection with the enrollment)
+
+3. Call /train with the collection id to train the collection classifier
+
+4. Call /identify with the collection_id and the image you’d like to preform identify on, and you’ll get the names and ids of identified profiles!
+
+
 
 # Spoof Detection
 
@@ -65,12 +93,12 @@ You must replace <code>chuiai-api-key</code> with your personal API key.
 import requests
 
 headers = {
-  "x-api-key":"chui-api-key",
+  "x-api-key":"your_api_key",
   "Content-Type":"image/jpeg",
   
 }
 
-url = "https://api.chui.ai/v1/spdetect"
+url = "https://api.trueface.ai/v1/spdetect"
 
 r  = requests.post(url,data=open('/Users/nezare/Pictures/test_images/fake_1.jpg','rb').read(),headers=headers)
 
@@ -78,7 +106,7 @@ print r.json()
 ```
 
 ```shell
-curl -X POST -H "x-api-key: chui-api-key" -H "Content-Type: image/jpeg" --data-binary "@fake_1.jpg" "https://api.chui.ai/v1/spdetect"
+curl -X POST -H "x-api-key: Truefaceai-api-key" -H "Content-Type: image/jpeg" --data-binary "@fake_1.jpg" "https://api.trueface.ai/v1/spdetect"
 
 ```
 
@@ -102,7 +130,7 @@ This endpoint checks if an image is a spoof attempt.
 
 ### HTTP Request
 
-`POST https://api.chui.ai/v1/spdetect`
+`POST https://api.trueface.ai/v1/spdetect`
 
 ### Binary Payload
 
@@ -137,12 +165,12 @@ img | true | base64 encoded string
 import requests
 
 headers = {
-  "x-api-key":"chui-api-key",
+  "x-api-key":"Truefaceai-api-key",
   "Content-Type":"image/jpeg",
   
 }
 
-url = "https://api.chui.ai/v1/facedetect"
+url = "https://api.trueface.ai/v1/facedetect"
 
 r  = requests.post(url,data=open('/Users/nezare/Pictures/test_images/reat_1.jpg','rb').read(),headers=headers)
 
@@ -150,7 +178,7 @@ print r.json()
 ```
 
 ```shell
-curl -X POST -H "x-api-key: chui-api-key" -H "Content-Type: image/jpeg" --data-binary "@real_1.jpg" "https://api.chui.ai/v1/facedetect"
+curl -X POST -H "x-api-key: chui-api-key" -H "Content-Type: image/jpeg" --data-binary "@real_1.jpg" "https://api.trueface.ai/v1/facedetect"
 
 ```
 
@@ -193,7 +221,7 @@ Detect faces in an image
 
 ### HTTP Request
 
-`POST https://api.chui.ai/v1/facedetect`
+`POST https://api.trueface.ai/v1/facedetect`
 
 ### Binary Payload
 
@@ -228,7 +256,7 @@ The face detection endpoint supports returning 68 face landmarks. To get the raw
 
 ### Example
 
-`POST https://api.chui.ai/v1/facedetect?rawlandmarks=true`
+`POST https://api.trueface.ai/v1/facedetect?rawlandmarks=true`
 
 
 # Face Recognition
@@ -245,7 +273,7 @@ headers = {
   
 }
 
-url = "https://api.chui.ai/v1/enroll"
+url = "https://api.trueface.ai/v1/enroll"
 
 data = {
   "img0":base64.b64encode(open('0.jpg','rb').read()),
@@ -285,7 +313,7 @@ Remember — our apis utilize deep learning a technique that requires a lot of d
 
 ### HTTP Request
 
-`POST https://api.chui.ai/v1/enroll`
+`POST https://api.trueface.ai/v1/enroll`
 
 This endpoint only accepts a json payload.
 
@@ -331,7 +359,7 @@ headers = {
   "Content-Type":"application/json",  
 }
 
-url = "https://api.chui.ai/v1/enroll"
+url = "https://api.trueface.ai/v1/enroll"
 
 
 data = {
@@ -367,7 +395,7 @@ this endpoint allows you to update a profile with more training pictures to impr
 
 ### HTTP Request
 
-`PUT https://api.chui.ai/v1/enroll`
+`PUT https://api.trueface.ai/v1/enroll`
 
 This endpoint only accepts a json payload.
 
@@ -398,7 +426,7 @@ headers = {
   "Content-Type":"application/json",  
 }
 
-url = "https://api.chui.ai/v1/collection"
+url = "https://api.trueface.ai/v1/collection"
 
 data = {
   "name":"Home",
@@ -432,7 +460,7 @@ To preform indentification you need to group profiles in collections. To create 
 
 
 ### HTTP Request
-`POST https://api.chui.ai/v1/collection`
+`POST https://api.trueface.ai/v1/collection`
 
 ### JSON Payload
 
@@ -460,11 +488,11 @@ import json
 
 headers = {
   "content-type":"application/json",
-  "x-api-key":"chui-api-key"
+  "x-api-key":"Truefaceai-api-key"
   
 }
 
-url = "https://api.chui.ai/v1/collection"
+url = "https://api.trueface.ai/v1/collection"
 
 
 data = {
@@ -509,7 +537,7 @@ collection_id | true | string
 
 
 ### HTTP Request
-`PUT https://api.chui.ai/v1/collection`
+`PUT https://api.trueface.ai/v1/collection`
 
 
 ### Response
@@ -525,10 +553,10 @@ import json
 
 headers = {
   "content-type":"application/json",
-  "x-api-key":"chui-api-key"
+  "x-api-key":"Truefaceai-api-key"
 }
 
-url = "https://api.chui.ai/v1/train"
+url = "https://api.trueface.ai/v1/train"
 
 
 data = {
@@ -566,7 +594,7 @@ Remember — you need to trigger a training of the classifier before its ready f
 </aside>
 
 ### HTTP Request
-`POST https://api.chui.ai/v1/train`
+`POST https://api.trueface.ai/v1/train`
 
 ### JSON Payload
 
@@ -595,7 +623,7 @@ headers = {
   
 }
 
-url = "https://api.chui.ai/v1/match"
+url = "https://api.trueface.ai/v1/match"
 
 data = {
   "img":base64.b64encode(open('2.jpg','rb').read()),
@@ -629,12 +657,12 @@ No Curl Example for this endpoint, check python.
 }
 ```
 
-`POST https://api.chui.ai/v1/match`
+`POST https://api.trueface.ai/v1/match`
 
 
 ### HTTP Request
 
-`POST https://api.chui.ai/v1/match`
+`POST https://api.trueface.ai/v1/match`
 
 
 This endpoint only accepts a json payload.
@@ -674,7 +702,7 @@ headers = {
   "Content-Type":"application/json",  
 }
 
-url = "https://api.chui.ai/v1/identify"
+url = "https://api.trueface.ai/v1/identify"
 
 
 data = {
@@ -707,7 +735,7 @@ No Curl Example for this endpoint, check python.
 
 ### HTTP Request
 
-`POST https://api.chui.ai/v1/identify`
+`POST https://api.trueface.ai/v1/identify`
 
 This endpoint only accepts a json payload.
 
