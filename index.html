@@ -220,7 +220,7 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='http://chui.ai'>chui.ai</a></li>
+            <li><a href='http://trueface.ai'>Trueface.ai</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -242,27 +242,51 @@ Remember — this api doesn&rsquo;t accept images larger than 2mbs, resize and/o
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chuiai-api-key"</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"your_api_key"</span>
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
 curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"x-api-key: chuiai-api-key"</span>
+  -H <span class="s2">"x-api-key: Truefaceai-api-key"</span>
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">chuiai-api-key</code> with your API key.</p>
+<p>Make sure to replace <code class="prettyprint">Truefaceai-api-key</code> with your API key.</p>
 </blockquote>
 
-<p>Chui.ai uses API keys to allow access. You can register a new API key at our <a href="http://chui.ai/">developer portal</a>.</p>
+<p>Trueface.ai uses API keys to allow access. You can register a new API key at our <a href="https://trueface.ai/">developer portal</a>.</p>
 
-<p>Chui.ai expects the API key to be included in all requests to the server in a header that looks like the following:</p>
+<p>Trueface.ai expects the API key to be included in all requests to the server in a header that looks like the following:</p>
 
-<p><code class="prettyprint">x-api-key: chuiai-api-key</code></p>
+<p><code class="prettyprint">x-api-key: your_api_key</code></p>
 
 <aside class="notice">
-You must replace <code>chuiai-api-key</code> with your personal API key.
+You must replace <code>truefaceai-api-key</code> with your personal API key.
 </aside>
+
+<h1 id="concepts">Concepts</h1>
+
+<h2 id="preforming-1-1-matching">Preforming 1:1 Matching</h2>
+
+<p>To perform a 1:1 matching operation (check if any faces in an image match an enrolled profile), you need to:</p>
+
+<ol>
+<li><p>Create s profile with POST /enroll</p></li>
+<li><p>Call POST /match with the id of the enrollment along with the  image you’d like to check in base64 encoded format</p></li>
+</ol>
+
+<p>The default threshold is 0.4 (scores over 99.2% on the LFW). To increase the matching threshold simply pass a &ldquo;threshold&rdquo; param.</p>
+
+<h2 id="preforming-1-n-identification">Preforming 1:n Identification</h2>
+
+<p>To preform 1:n identification (identify faces in an image), you need to:</p>
+
+<ol>
+<li><p>Create a collection with POST /collection</p></li>
+<li><p>Create profiles with /enroll passing the collection id from above, if the profiles are already enrolled then you can use PUT /collection to update the collection with the enrollment)</p></li>
+<li><p>Call /train with the collection id to train the collection classifier</p></li>
+<li><p>Call /identify with the collection_id and the image you’d like to preform identify on, and you’ll get the names and ids of identified profiles!</p></li>
+</ol>
 
 <h1 id="spoof-detection">Spoof Detection</h1>
 
@@ -270,17 +294,17 @@ You must replace <code>chuiai-api-key</code> with your personal API key.
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span><span class="p">,</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"your_api_key"</span><span class="p">,</span>
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"image/jpeg"</span><span class="p">,</span>
 
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/spdetect"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/spdetect"</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">'/Users/nezare/Pictures/test_images/fake_1.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl -X POST -H <span class="s2">"x-api-key: chui-api-key"</span> -H <span class="s2">"Content-Type: image/jpeg"</span> --data-binary <span class="s2">"@fake_1.jpg"</span> <span class="s2">"https://api.chui.ai/v1/spdetect"</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -X POST -H <span class="s2">"x-api-key: Truefaceai-api-key"</span> -H <span class="s2">"Content-Type: image/jpeg"</span> --data-binary <span class="s2">"@fake_1.jpg"</span> <span class="s2">"https://api.trueface.ai/v1/spdetect"</span>
 
 </code></pre>
 <blockquote>
@@ -301,7 +325,7 @@ You must replace <code>chuiai-api-key</code> with your personal API key.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/spdetect</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/spdetect</code></p>
 
 <h3 id="binary-payload">Binary Payload</h3>
 
@@ -339,17 +363,17 @@ Remember — always include a Content-Type header in your request
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span><span class="p">,</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"Truefaceai-api-key"</span><span class="p">,</span>
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"image/jpeg"</span><span class="p">,</span>
 
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/facedetect"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/facedetect"</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">'/Users/nezare/Pictures/test_images/reat_1.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl -X POST -H <span class="s2">"x-api-key: chui-api-key"</span> -H <span class="s2">"Content-Type: image/jpeg"</span> --data-binary <span class="s2">"@real_1.jpg"</span> <span class="s2">"https://api.chui.ai/v1/facedetect"</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -X POST -H <span class="s2">"x-api-key: chui-api-key"</span> -H <span class="s2">"Content-Type: image/jpeg"</span> --data-binary <span class="s2">"@real_1.jpg"</span> <span class="s2">"https://api.trueface.ai/v1/facedetect"</span>
 
 </code></pre>
 <blockquote>
@@ -389,7 +413,7 @@ Remember — always include a Content-Type header in your request
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/facedetect</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/facedetect</code></p>
 
 <h3 id="binary-payload">Binary Payload</h3>
 
@@ -431,7 +455,7 @@ Remember — always include a Content-Type header in your request
 
 <h3 id="example">Example</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/facedetect?rawlandmarks=true</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/facedetect?rawlandmarks=true</code></p>
 
 <h1 id="face-recognition">Face Recognition</h1>
 
@@ -446,7 +470,7 @@ Remember — always include a Content-Type header in your request
 
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/enroll"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/enroll"</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'0.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
@@ -480,7 +504,7 @@ Remember — our apis utilize deep learning a technique that requires a lot of d
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/enroll</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/enroll</code></p>
 
 <p>This endpoint only accepts a json payload.</p>
 
@@ -538,7 +562,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/enroll"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/enroll"</span>
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -567,7 +591,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT https://api.chui.ai/v1/enroll</code></p>
+<p><code class="prettyprint">PUT https://api.trueface.ai/v1/enroll</code></p>
 
 <p>This endpoint only accepts a json payload.</p>
 
@@ -604,7 +628,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/collection"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/collection"</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"name"</span><span class="p">:</span><span class="s">"Home"</span><span class="p">,</span>
@@ -632,7 +656,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/collection</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/collection</code></p>
 
 <h3 id="json-payload">JSON Payload</h3>
 
@@ -672,11 +696,11 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"content-type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
-  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"Truefaceai-api-key"</span>
 
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/collection"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/collection"</span>
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -729,7 +753,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT https://api.chui.ai/v1/collection</code></p>
+<p><code class="prettyprint">PUT https://api.trueface.ai/v1/collection</code></p>
 
 <h3 id="response">Response</h3>
 
@@ -742,10 +766,10 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"content-type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
-  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"Truefaceai-api-key"</span>
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/train"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/train"</span>
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -776,7 +800,7 @@ Remember — you need to trigger a training of the classifier before its ready f
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/train</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/train</code></p>
 
 <h3 id="json-payload">JSON Payload</h3>
 
@@ -811,7 +835,7 @@ Remember — you need to trigger a training of the classifier before its ready f
 
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/match"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/match"</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"img"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
@@ -839,11 +863,11 @@ Remember — you need to trigger a training of the classifier before its ready f
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p><code class="prettyprint">POST https://api.chui.ai/v1/match</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/match</code></p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/match</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/match</code></p>
 
 <p>This endpoint only accepts a json payload.</p>
 
@@ -895,7 +919,7 @@ Remember — this endpoint processes one face at a time.
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/identify"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/identify"</span>
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -922,7 +946,7 @@ Remember — this endpoint processes one face at a time.
 </span></code></pre>
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.chui.ai/v1/identify</code></p>
+<p><code class="prettyprint">POST https://api.trueface.ai/v1/identify</code></p>
 
 <p>This endpoint only accepts a json payload.</p>
 
