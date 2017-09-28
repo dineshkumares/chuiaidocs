@@ -609,6 +609,68 @@ A success message will indicate the classifier is in training for the collection
 
 
 
+## Get a list of your Collections
+
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "content-type":"application/json",
+  "x-api-key":"Truefaceai-api-key"
+  
+}
+
+url = "https://api.trueface.ai/v1/collection"
+
+
+r  = requests.get(url,headers=headers)
+
+print r.json()
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
+
+
+> The above request returns JSON structured like this:
+
+```json
+{
+    "data": [
+              {
+                          "classifier_url": "",
+                          "created": "2017-08-19T00:13:24.971650",
+                          "enrollments": [
+                              "ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgKDI0LMKDA",
+                              "ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgMDH6KYJDA"
+                          ],
+                          "id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMCluLELDA",
+                          "label_encoder": "",
+                          "name": "Home",
+                          "owner": "",
+                          "unknown": true,
+                          "updated": "2017-08-20T00:58:16.616790"
+              }
+            ]
+}
+```
+
+To get a list of your collections, simply make a get request to /collection
+
+
+### HTTP Request
+`GET https://api.trueface.ai/v1/collection`
+
+
+### Response
+The response includeds the enrollment ids in the collection.
+
+
+
 
 ## Face Match
 
