@@ -95,7 +95,7 @@ import requests
 headers = {
   "x-api-key":"your_api_key",
   "Content-Type":"image/jpeg",
-  
+
 }
 
 url = "https://api.trueface.ai/v1/spdetect"
@@ -167,7 +167,7 @@ import requests
 headers = {
   "x-api-key":"Truefaceai-api-key",
   "Content-Type":"image/jpeg",
-  
+
 }
 
 url = "https://api.trueface.ai/v1/facedetect"
@@ -270,7 +270,7 @@ import json
 headers = {
   "x-api-key":"your_api_key",
   "Content-Type":"application/json",
-  
+
 }
 
 url = "https://api.trueface.ai/v1/enroll"
@@ -300,7 +300,7 @@ No Curl Example for this endpoint, check python.
 {
 	"message": "enrollment processed successfully",
 	"data": {
-		"enrollment_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgID5r4YKDA"
+		"enrollment_id": "your_enrollment_id"
 	},
 	"success": true
 }
@@ -319,7 +319,7 @@ This endpoint only accepts a json payload.
 
 To enforce good training, we recommend a minimum of 3 pictures to enroll someone.
 
-include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N) --> (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)
+Include the enrollment pictures as base64 strings as -> img0,img1,img2....img(N) --> (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)
 
 
 <aside class="warning">
@@ -328,14 +328,14 @@ Remember — don't include different faces when enrolling someone
 
 
 ### Collection ID
-you can add a profile to a collection by simply including the collection id as "collection_id" in the json payload
+You can add a profile to a collection by simply including the collection id as "collection_id" in the json payload
 
 ### JSON Payload
 
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 img(0-n) | true | base64 encoded string
 name | false | string
 collection_id | false | string
@@ -347,7 +347,7 @@ The response includes the profile id which you can use in subsequent matching op
 
 
 
-## Update Profile
+## Update Enrollment
 
 ```python
 import requests
@@ -363,9 +363,9 @@ url = "https://api.trueface.ai/v1/enroll"
 
 
 data = {
-  "enrollment_id":"ahJkZXZ-Y2h1aXNwZGV0ZWN0b3JyFwsSCkVucm9sbG1lbnQYgICAgIDglwoM",
+  "enrollment_id":"your_enrollment_id",
   "img0":base64.b64encode(open('3.jpg','rb').read()),
-  
+
 }
 
 r  = requests.put(url,data=json.dumps(data),headers=headers)
@@ -384,14 +384,14 @@ No Curl Example for this endpoint, check python.
 {
 	"message": "enrollment updated successfully",
 	"data": {
-		"enrollment_id": "ahJkZXZ-Y2h1aXNwZGV0ZWN0b3JyFwsSCkVucm9sbG1lbnQYgICAgIDglwoM"
+		"enrollment_id": "your_enrollment_id"
 	},
 	"success": true
 }
 ```
 
 
-this endpoint allows you to update a profile with more training pictures to improve accuracy.
+This endpoint allows you to update a profile with more training pictures to improve accuracy.
 
 ### HTTP Request
 
@@ -405,16 +405,72 @@ This endpoint only accepts a json payload.
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 img(0-n) | true | base64 encoded string
 enrollment_id | true | string
 
 
+## Delete Enrollment
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "x-api-key":"your_api_key",
+  "Content-Type":"application/json",  
+}
+
+url = "https://api.chui.ai/v1/enroll"
 
 
+data = {
+  "enrollment_id":"your_enrollment_id"
+}
+
+r  = requests.delete(url,data=json.dumps(data),headers=headers)
+
+print r.json()
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
 
 
-## Create a collection
+> The above request returns JSON structured like this:
+
+```json
+{
+    "data": "Enrollment *your_enrollment_id* has been deleted",
+    "message": null,
+    "success": true
+}
+```
+
+
+This endpoint allows you to delete an enrolled profile.
+
+### HTTP Request
+
+`DELETE https://api.chui.ai/v1/enroll`
+
+This endpoint only accepts a json payload.
+
+
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | -----------
+enrollment_id | true | string
+
+### Response
+The response looks as follows
+
+## Create a Collection
 
 ```python
 import requests
@@ -447,7 +503,7 @@ No Curl Example for this endpoint, check python.
 ```json
 {
 	"data": {
-		"collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICfwYELDA"
+		"collection_id": "your_collection_id"
 	},
 	"message": "collection created successfully",
 	"success": true
@@ -456,7 +512,7 @@ No Curl Example for this endpoint, check python.
 This endpoint only accepts a json payload.
 
 
-To preform indentification you need to group profiles in collections. To create a collection simply post name of the collection and save the returned id for later use.
+To perform indentification you need to group profiles in collections. To create a collection simply post the name of the collection and save the returned id for later use.
 
 
 ### HTTP Request
@@ -467,7 +523,7 @@ To preform indentification you need to group profiles in collections. To create 
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 name | true | string
 unknowns | optional | boolean
 
@@ -476,7 +532,7 @@ unknowns | optional | boolean
 If unknowns is set to true, a class with dynamic dynamic sample size added to each classifier to help it filter out unknowns and reduce false positives. Can be in conjunction with the confidence rate.
 
 ### Response
-The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.
+The response includes the collection id, make sure you save this id to be able to perform identification on your collection.
 
 ## Update a Collection
 
@@ -488,16 +544,15 @@ import json
 
 headers = {
   "content-type":"application/json",
-  "x-api-key":"Truefaceai-api-key"
-  
+  "x-api-key":"chui-api-key"
 }
 
 url = "https://api.trueface.ai/v1/collection"
 
 
 data = {
-  "enrollment_id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgIDE25QJDA",
-  "collection_id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"
+  "enrollment_id":"your_enrollment_id",
+  "collection_id":"your_collection_id"
 }
 
 r  = requests.put(url,data=json.dumps(data),headers=headers)
@@ -516,7 +571,7 @@ No Curl Example for this endpoint, check python.
 {
 	"message": "collection updated successfully",
 	"data": {
-		"collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"
+		"collection_id": "your_collection_id"
 	},
 	"success": true
 }
@@ -524,14 +579,14 @@ No Curl Example for this endpoint, check python.
 
 To update a collection with an enrollment, make a put request to the collection endpoint with the collection id and the profile you'd like to add.
 
-A classifier is created for each collection and is retrained everytime the collection is updated. Please allow for up to 30 seconds after updating your collection for the collection classifier to reflect the changes.
+A classifier is created for each collection and is retrained every time the collection is updated. Please allow for up to 30 seconds after updating your collection for the collection classifier to reflect the changes.
 
 ### JSON Payload
 
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 enrollment_id | true | string
 collection_id | true | string
 
@@ -541,10 +596,68 @@ collection_id | true | string
 
 
 ### Response
-The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.
+The response includes the collection id, make sure you save this id to be able to perform identification on your collection.
+
+## Delete a Collection
+
+```python
+import requests
+import base64
+import json
+
+headers = {
+  "x-api-key":"chui-api-key",
+  "Content-Type":"application/json",  
+}
+
+url = "https://api.chui.ai/v1/collection"
+
+data = {
+  "collection_id":"your_collection_id",
+}
+
+r  = requests.delete(url,data=json.dumps(data),headers=headers)
+
+print r.content
+```
+
+```shell
+No Curl Example for this endpoint, check python.
+```
 
 
-## Train a Collection classifier
+> The above request returns JSON structured like this:
+
+```json
+{
+    "data": "Entity *your_collection_id* has been deleted",
+    "message": null,
+    "success": true
+}
+```
+This endpoint only accepts a json payload.
+
+
+To delete a collection, just send a collection_id to the delete endpoint.
+
+
+### HTTP Request
+`DELETE https://api.chui.ai/v1/collection`
+
+### JSON Payload
+
+Make sure to include an application/json Content-Type header when posting a json payload.
+
+Parameter | Required | Description
+--------- | ------- | -----------
+collection_id | true | string
+
+
+### Response
+The response looks as follows
+
+
+## Train a Collection Classifier
 
 ```python
 import requests
@@ -560,7 +673,7 @@ url = "https://api.trueface.ai/v1/train"
 
 
 data = {
-  "collection_id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"
+  "collection_id":"your_collection_id"
 }
 
 r  = requests.post(url,data=json.dumps(data),headers=headers)
@@ -578,7 +691,7 @@ No Curl Example for this endpoint, check python.
 ```json
 {
     "data": {
-        "collection_id": "ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMDMgY4LDA"
+        "collection_id": "your_collection_id"
     },
     "message": "retraining the classifier",
     "success": true
@@ -601,7 +714,7 @@ Remember — you need to trigger a training of the classifier before its ready f
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 collection_id_ | true | string
 
 ### Response
@@ -682,14 +795,14 @@ import json
 headers = {
   "x-api-key":"your_api_key",
   "Content-Type":"application/json",
-  
+
 }
 
 url = "https://api.trueface.ai/v1/match"
 
 data = {
   "img":base64.b64encode(open('2.jpg','rb').read()),
-  "id":"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgID5r4YKDA"
+  "id":"your_id"
 }
 
 r  = requests.post(url,data=json.dumps(data),headers=headers)
@@ -746,7 +859,7 @@ Remember — this endpoint processes one face at a time.
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 img | true | base64 encoded string
 id | true | string
 threshold | false | float
@@ -769,7 +882,7 @@ url = "https://api.trueface.ai/v1/identify"
 
 data = {
   "img":base64.b64encode(open('2.jpg','rb').read()),
-  "collection_id":"chui-collection-id"
+  "collection_id":"your_collection_id"
 }
 
 r  = requests.post(url,data=json.dumps(data),headers=headers)
@@ -811,15 +924,6 @@ To use this endpoint send the image as a base64 encoded string along with the co
 Make sure to include an application/json Content-Type header when posting a json payload.
 
 Parameter | Required | Description
---------- | ------- | ----------- 
+--------- | ------- | -----------
 img | true | base64 encoded string
 collection_id | true | string
-
-
-
-
-
-
-
-
-
