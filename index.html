@@ -492,7 +492,7 @@ Remember — always include a Content-Type header in your request
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enrollment processed successfully"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"enrollment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgID5r4YKDA"</span><span class="w">
+        </span><span class="s2">"enrollment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_enrollment_id"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -510,7 +510,7 @@ Remember — our apis utilize deep learning a technique that requires a lot of d
 
 <p>To enforce good training, we recommend a minimum of 3 pictures to enroll someone.</p>
 
-<p>include the enrollment pictures as base64 strings as -&gt; img0,img1,img2&hellip;.img(N) &ndash;&gt; (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)</p>
+<p>Include the enrollment pictures as base64 strings as -&gt; img0,img1,img2&hellip;.img(N) &ndash;&gt; (maximum 10 images for the intial enrollment, you can add images to a profile for more training with the update endpoing below)</p>
 
 <aside class="warning">
 Remember — don&rsquo;t include different faces when enrolling someone
@@ -518,7 +518,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="collection-id">Collection ID</h3>
 
-<p>you can add a profile to a collection by simply including the collection id as &ldquo;collection_id&rdquo; in the json payload</p>
+<p>You can add a profile to a collection by simply including the collection id as &ldquo;collection_id&rdquo; in the json payload</p>
 
 <h3 id="json-payload">JSON Payload</h3>
 
@@ -552,7 +552,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <p>The response includes the profile id which you can use in subsequent matching operations and to update the profile with more training pictures.</p>
 
-<h2 id="update-profile">Update Profile</h2>
+<h2 id="update-enrollment">Update Enrollment</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -566,7 +566,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"ahJkZXZ-Y2h1aXNwZGV0ZWN0b3JyFwsSCkVucm9sbG1lbnQYgICAgIDglwoM"</span><span class="p">,</span>
+  <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"your_enrollment_id"</span><span class="p">,</span>
   <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'3.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
 
 <span class="p">}</span>
@@ -582,12 +582,12 @@ Remember — don&rsquo;t include different faces when enrolling someone
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enrollment updated successfully"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"enrollment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahJkZXZ-Y2h1aXNwZGV0ZWN0b3JyFwsSCkVucm9sbG1lbnQYgICAgIDglwoM"</span><span class="w">
+        </span><span class="s2">"enrollment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_enrollment_id"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>this endpoint allows you to update a profile with more training pictures to improve accuracy.</p>
+<p>This endpoint allows you to update a profile with more training pictures to improve accuracy.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -618,7 +618,68 @@ Remember — don&rsquo;t include different faces when enrolling someone
 </tr>
 </tbody></table>
 
-<h2 id="create-a-collection">Create a collection</h2>
+<h2 id="delete-enrollment">Delete Enrollment</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"your_api_key"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/enroll"</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"your_enrollment_id"</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enrollment *your_enrollment_id* has been deleted"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint allows you to delete an enrolled profile.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://api.chui.ai/v1/enroll</code></p>
+
+<p>This endpoint only accepts a json payload.</p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>enrollment_id</td>
+<td>true</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<p>The response looks as follows</p>
+
+<h2 id="create-a-collection">Create a Collection</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -644,7 +705,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICfwYELDA"</span><span class="w">
+        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_collection_id"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collection created successfully"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -652,7 +713,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 </span></code></pre>
 <p>This endpoint only accepts a json payload.</p>
 
-<p>To preform indentification you need to group profiles in collections. To create a collection simply post name of the collection and save the returned id for later use.</p>
+<p>To perform indentification you need to group profiles in collections. To create a collection simply post the name of the collection and save the returned id for later use.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -687,7 +748,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="response">Response</h3>
 
-<p>The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.</p>
+<p>The response includes the collection id, make sure you save this id to be able to perform identification on your collection.</p>
 
 <h2 id="update-a-collection">Update a Collection</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -696,16 +757,15 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"content-type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>
-  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"Truefaceai-api-key"</span>
-
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span>
 <span class="p">}</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/collection"</span>
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgIDE25QJDA"</span><span class="p">,</span>
-  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"</span>
+  <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"your_enrollment_id"</span><span class="p">,</span>
+  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"your_collection_id"</span>
 <span class="p">}</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -719,14 +779,14 @@ Remember — don&rsquo;t include different faces when enrolling someone
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collection updated successfully"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"</span><span class="w">
+        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_collection_id"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>To update a collection with an enrollment, make a put request to the collection endpoint with the collection id and the profile you&rsquo;d like to add.</p>
 
-<p>A classifier is created for each collection and is retrained everytime the collection is updated. Please allow for up to 30 seconds after updating your collection for the collection classifier to reflect the changes.</p>
+<p>A classifier is created for each collection and is retrained every time the collection is updated. Please allow for up to 30 seconds after updating your collection for the collection classifier to reflect the changes.</p>
 
 <h3 id="json-payload">JSON Payload</h3>
 
@@ -757,9 +817,69 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="response">Response</h3>
 
-<p>The response includeds the collection id, make sure you save this id to preform to be able to preform identification on your collection.</p>
+<p>The response includes the collection id, make sure you save this id to be able to perform identification on your collection.</p>
 
-<h2 id="train-a-collection-classifier">Train a Collection classifier</h2>
+<h2 id="delete-a-collection">Delete a Collection</h2>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"x-api-key"</span><span class="p">:</span><span class="s">"chui-api-key"</span><span class="p">,</span>
+  <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/collection"</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"your_collection_id"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
+</code></pre><pre class="highlight shell tab-shell"><code>No Curl Example <span class="k">for </span>this endpoint, check python.
+</code></pre>
+<blockquote>
+<p>The above request returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Entity *your_collection_id* has been deleted"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint only accepts a json payload.</p>
+
+<p>To delete a collection, just send a collection_id to the delete endpoint.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://api.chui.ai/v1/collection</code></p>
+
+<h3 id="json-payload">JSON Payload</h3>
+
+<p>Make sure to include an application/json Content-Type header when posting a json payload.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>collection_id</td>
+<td>true</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<h3 id="response">Response</h3>
+
+<p>The response looks as follows</p>
+
+<h2 id="train-a-collection-classifier">Train a Collection Classifier</h2>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -773,7 +893,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgICf2p8KDA"</span>
+  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"your_collection_id"</span>
 <span class="p">}</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -786,7 +906,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpDb2xsZWN0aW9uGICAgMDMgY4LDA"</span><span class="w">
+        </span><span class="s2">"collection_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_collection_id"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"retraining the classifier"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -890,7 +1010,7 @@ Remember — you need to trigger a training of the classifier before its ready f
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"img"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
-  <span class="s">"id"</span><span class="p">:</span><span class="s">"ahBzfmNodWlzcGRldGVjdG9ychcLEgpFbnJvbGxtZW50GICAgID5r4YKDA"</span>
+  <span class="s">"id"</span><span class="p">:</span><span class="s">"your_id"</span>
 <span class="p">}</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -975,7 +1095,7 @@ Remember — this endpoint processes one face at a time.
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"img"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'2.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
-  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"chui-collection-id"</span>
+  <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"your_collection_id"</span>
 <span class="p">}</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
