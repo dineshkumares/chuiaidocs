@@ -16,7 +16,7 @@ search: true
 
 # Introduction
 
-Welcome to the chui.ai API documentation! You can use our API to detect, match, identify and validate faces.
+Welcome to the Trueface.ai API documentation! You can use our API to detect, match, identify and validate faces.
 
 
 <aside class="warning">
@@ -422,7 +422,7 @@ headers = {
   "Content-Type":"application/json",  
 }
 
-url = "https://api.chui.ai/v1/enroll"
+url = "https://api.trueface.ai/v1/enroll"
 
 
 data = {
@@ -454,7 +454,7 @@ This endpoint allows you to delete an enrolled profile.
 
 ### HTTP Request
 
-`DELETE https://api.chui.ai/v1/enroll`
+`DELETE https://api.trueface.ai/v1/enroll`
 
 This endpoint only accepts a json payload.
 
@@ -610,7 +610,7 @@ headers = {
   "Content-Type":"application/json",  
 }
 
-url = "https://api.chui.ai/v1/collection"
+url = "https://api.trueface.ai/v1/collection"
 
 data = {
   "collection_id":"your_collection_id",
@@ -642,7 +642,7 @@ To delete a collection, just send a collection_id to the delete endpoint.
 
 
 ### HTTP Request
-`DELETE https://api.chui.ai/v1/collection`
+`DELETE https://api.trueface.ai/v1/collection`
 
 ### JSON Payload
 
@@ -733,7 +733,7 @@ import json
 headers = {
   "content-type":"application/json",
   "x-api-key":"Truefaceai-api-key"
-  
+
 }
 
 url = "https://api.trueface.ai/v1/collection"
