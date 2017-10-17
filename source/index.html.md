@@ -364,8 +364,7 @@ url = "https://api.trueface.ai/v1/enroll"
 
 data = {
   "enrollment_id":"your_enrollment_id",
-  "img0":base64.b64encode(open('3.jpg','rb').read()),
-
+  "img0":base64.b64encode(open('3.jpg','rb').read())
 }
 
 r  = requests.put(url,data=json.dumps(data),headers=headers)
