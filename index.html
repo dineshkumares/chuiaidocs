@@ -228,7 +228,7 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the chui.ai API documentation! You can use our API to detect, match, identify and validate faces.</p>
+<p>Welcome to the Trueface.ai API documentation! You can use our API to detect, match, identify and validate faces.</p>
 
 <aside class="warning">
 Remember — this api doesn&rsquo;t accept images larger than 2mbs, resize and/or compress images before sending them.
@@ -287,6 +287,18 @@ You must replace <code>truefaceai-api-key</code> with your personal API key.
 <li><p>Call /train with the collection id to train the collection classifier</p></li>
 <li><p>Call /identify with the collection_id and the image you’d like to preform identify on, and you’ll get the names and ids of identified profiles!</p></li>
 </ol>
+
+<h1 id="postman-collection">Postman Collection</h1>
+
+<p><a href="https://chuispdetector.appspot.com/postman_collection">Click here</a> to download a Postman collection with examples covering most endpoints. Use Postman&rsquo;s code generation feature to generate snippets for your favorite language.</p>
+
+<h1 id="trueface-ai-js-sdk">Trueface.ai JS SDK</h1>
+
+<p><a href="https://github.com/getchui/Trueface.ai_SDK">Our Typesript / Javascript SDK</a> Implements Trueface&rsquo;s API and simplifies using it in front-end applications</p>
+
+<h1 id="trueface-ai-react-components">Trueface.ai React Components</h1>
+
+<p><a href="https://github.com/getchui/Trueface.ai_SDK/tree/master/trueface-react">Open-source components for React</a> that allow you to quickly build facial recognition UIs for your app.</p>
 
 <h1 id="spoof-detection">Spoof Detection</h1>
 
@@ -567,8 +579,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"enrollment_id"</span><span class="p">:</span><span class="s">"your_enrollment_id"</span><span class="p">,</span>
-  <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'3.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()),</span>
-
+  <span class="s">"img0"</span><span class="p">:</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'3.jpg'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 <span class="p">}</span>
 
 <span class="n">r</span>  <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -628,7 +639,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/enroll"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/enroll"</span>
 
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -653,7 +664,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://api.chui.ai/v1/enroll</code></p>
+<p><code class="prettyprint">DELETE https://api.trueface.ai/v1/enroll</code></p>
 
 <p>This endpoint only accepts a json payload.</p>
 
@@ -829,7 +840,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
   <span class="s">"Content-Type"</span><span class="p">:</span><span class="s">"application/json"</span><span class="p">,</span>  
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.chui.ai/v1/collection"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.trueface.ai/v1/collection"</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">"collection_id"</span><span class="p">:</span><span class="s">"your_collection_id"</span><span class="p">,</span>
@@ -855,7 +866,7 @@ Remember — don&rsquo;t include different faces when enrolling someone
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://api.chui.ai/v1/collection</code></p>
+<p><code class="prettyprint">DELETE https://api.trueface.ai/v1/collection</code></p>
 
 <h3 id="json-payload">JSON Payload</h3>
 
