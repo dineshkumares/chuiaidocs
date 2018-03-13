@@ -19,7 +19,6 @@ search: true
 Welcome to the Trueface.ai API documentation! You can use our API to detect, match, identify and validate faces.
 
 
-
 # Authentication
 
 > To authorize, use this code:
@@ -80,7 +79,6 @@ To preform 1:n identification (identify faces in an image), you need to:
 
 
 # Postman Collection
-
 
 [Click here](https://chuispdetector.appspot.com/postman_collection) to download a Postman collection with examples covering most endpoints. Use Postman's code generation feature to generate snippets for your favorite language.
 
@@ -1028,7 +1026,6 @@ Parameter | Required | Description
 img(0-n) | true | base64 encoded string
 enrollment_id | true | string
 
-
 ## Get a list of your Enrollments
 
 
@@ -1393,6 +1390,7 @@ Make sure to include an application/json Content-Type header when posting a json
 Parameter | Required | Description
 --------- | ------- | -----------
 collection_id | true | string
+
 
 ### Response
 A success message will indicate the classifier is in training for the collection.
